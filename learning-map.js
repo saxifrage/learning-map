@@ -9,14 +9,25 @@
         return {
 
             drawVertex: function(x, y) {
-                x_center = (x * block_size) + half_block;
-                y_center = (y * block_size) - half_block;
+                var x_center = (x * block_size) + half_block;
+                var y_center = (y * block_size) - half_block;
 
                 svg.circle( x_center
                           , y_center
                           , radius
                           , {fill: 'yellow'}
                            );
+            },
+
+            drawEdge: function(x,y) {
+                var x_center = (x * block_size) + half_block;
+                var y_center = (y * block_size) - half_block;
+
+                var path = svg.createPath();
+                svg.path(path.move(x_center - half_block, y_center)
+                             .line( x_center + half_block, y_center)
+                                  , {stroke: 'orange', strokeWidth: 4}
+                                   );
             }
 
         }
@@ -66,13 +77,15 @@
                 seen[v] = true;
 
                 tiler.drawVertex(x, y);
+                for (var i=0, z=dag[v].length; i < z; i++)
+                    tiler.drawEdge(x+1, y+i);
 
                 y = y + 1;
 
                 Array.prototype.push.apply(nextgen, dag[v]);
             }
             if (nextgen.length)
-                mapgen(nextgen, x+1);
+                mapgen(nextgen, x+2);
         }
         mapgen(roots, x);
 
