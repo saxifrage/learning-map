@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="learning-map.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#map').learningMap();
+            });
+        </script>
+        <style>
+            * { margin: 0; padding: 0; }
+            #map {
+                height: 100vh;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+    </body>
+</html>
