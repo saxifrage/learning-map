@@ -1,5 +1,8 @@
 (function ($) {
 
+    function foo () {
+    }
+
     $.fn.learningMap = function(options) {
 
         var options = $.extend({}, $.fn.learningMap.defaults, options);
@@ -9,8 +12,16 @@
         var svg = this.svg('get');
 
         var dag = options.dag;
-        var queue = [0];
-        var seen = {};
+        var queue = Object.keys(dag);
+        for (var v in dag) {
+            for (var i=0, z=dag[v].length; i < z; i++) {
+                var idx = queue.indexOf(dag[v][i]);
+                if (idx > -1)
+                    queue.splice(idx, 1);
+            }
+        }
+        // At this point queue is populated with all and only root vertices.
+
 
         /* Set up layout variables.
          *
@@ -21,13 +32,14 @@
          *
          */
 
-        var nblocks = 5;
+        var nblocks = 11;
         var canvas_height = this.height();
         var block_size = canvas_height / nblocks;
         var half_block = block_size / 2;
-        var x_center, y_center, radius=(block_size * 0.40);
+        var x_center, y_center, radius=(block_size * 0.25);
         var x = 0;                      // start on the left
         var y = Math.ceil(nblocks / 2); // start in the middle
+        var seen = {};
 
         while (queue.length) {
             var v = queue.shift();
