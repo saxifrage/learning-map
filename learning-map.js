@@ -4,9 +4,13 @@
 
         var options = $.extend({}, $.fn.learningMap.defaults, options);
 
-        this.each(function() {
-            $(this).css('background', options.color);
-        });
+        this.addClass('learning-map');
+        for (var v in options.dag) {
+            var node = $('<div>');
+            node.addClass('learning-map-node');
+            node.css({top: v*60, left: v*60});
+            this.append(node);
+        }
 
         return this;
     };
@@ -14,5 +18,5 @@
 }(jQuery));
 
 jQuery.fn.learningMap.defaults = {
-    color: 'green'
+    dag: {}
 };

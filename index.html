@@ -5,7 +5,12 @@
         <script src="learning-map.js"></script>
         <script>
             $(document).ready(function() {
-                $('#map').learningMap();
+                var dag = { 0: [1]
+                          , 1: [2, 3]
+                          , 2: [3]
+                          , 3: []
+                           }
+                           $('#map').learningMap({'dag': dag});
             });
         </script>
         <style>
@@ -14,6 +19,7 @@
                 height: 100vh;
             }
         </style>
+        <link rel="stylesheet" href="learning-map.css">
     </head>
     <body>
         <div id="map"></div>
