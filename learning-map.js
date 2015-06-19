@@ -2,9 +2,7 @@
 
     $.fn.learningMap = function(options) {
 
-        var options = $.extend({
-            color: "green"
-        }, options);
+        var options = $.extend({}, $.fn.learningMap.defaults, options);
 
         this.each(function() {
             $(this).css('background', options.color);
@@ -14,3 +12,7 @@
     };
 
 }(jQuery));
+
+jQuery.fn.learningMap.defaults = {
+    color: 'green'
+};
