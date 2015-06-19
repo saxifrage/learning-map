@@ -2,6 +2,8 @@
 <html>
     <head>
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="jquery.svg.js"></script>
+        <script src="http://code.interactjs.io/interact-1.2.4.min.js"></script>
         <script src="learning-map.js"></script>
         <script>
             $(document).ready(function() {
@@ -10,7 +12,7 @@
                           , 2: [3]
                           , 3: []
                            }
-                           $('#map').learningMap({'dag': dag});
+                $('#map').learningMap({'dag': dag});
             });
         </script>
         <style>
