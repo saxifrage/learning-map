@@ -30,15 +30,15 @@
         this.svg();
         var svg = this.svg('get');
 
-        var queue = Object.keys(dag);
+        var roots = Object.keys(dag);
         for (var v in dag) {
             for (var i=0, z=dag[v].length; i < z; i++) {
-                var idx = queue.indexOf(dag[v][i]);
+                var idx = roots.indexOf(dag[v][i]);
                 if (idx > -1)
-                    queue.splice(idx, 1);
+                    roots.splice(idx, 1);
             }
         }
-        // At this point queue is populated with all and only root vertices.
+        // At this point roots is populated with all and only root vertices.
 
 
         /* Set up layout variables.
@@ -51,30 +51,30 @@
          */
 
         var nblocks = 11;
-        var x = 0;                      // start on the left
-        var y = Math.ceil(nblocks / 2); // start in the middle
-
-        function column() { return new Array(nblocks) }
-
-        var map = [column()];
-        var tiler = Tiler(this, nblocks, svg);
+        var x = 0;                          // start on the left
         var seen = {};
+        var tiler = Tiler(this, nblocks, svg);
 
-        while (queue.length) {
-            var v = queue.shift();
+        // Build a map as a matrix by recursing through the generations.
+        function mapgen(gen, x) {
+            var y = Math.ceil(nblocks / 2); // start in the middle
+            var nextgen = [];
+            while (gen.length) {
+                var v = gen.shift();
 
-            if (seen[v]) return;
-            seen[v] = true;
+                if (seen[v]) continue;
+                seen[v] = true;
 
-            tiler.drawVertex(x, y);
-            map[x][y] = true;
+                tiler.drawVertex(x, y);
 
-            if (x === map.length-1)
-                map.push(column());
-            x = x + 1;
+                y = y + 1;
 
-            Array.prototype.push.apply(queue, dag[v]);
+                Array.prototype.push.apply(nextgen, dag[v]);
+            }
+            if (nextgen.length)
+                mapgen(nextgen, x+1);
         }
+        mapgen(roots, x);
 
         return this;
     };
