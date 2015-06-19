@@ -1,9 +1,30 @@
 (function ($) {
 
-    function foo () {
+    function Tiler(container, nblocks, svg) {
+
+        var block_size = container.height() / nblocks;
+        var half_block = block_size / 2;
+        var x_center, y_center, radius=(block_size * 0.25);
+
+        return {
+
+            drawVertex: function(x, y) {
+                console.log('drawing!');
+
+                x_center = (x * block_size) + half_block;
+                y_center = (y * block_size) - half_block;
+
+                svg.circle( x_center
+                          , y_center
+                          , radius
+                          , {fill: 'yellow'}
+                           );
+            }
+
+        }
     }
 
-    $.fn.learningMap = function(options) {
+    $.fn.learningMap = function(dag, options) {
 
         var options = $.extend({}, $.fn.learningMap.defaults, options);
 
@@ -11,7 +32,6 @@
         this.svg();
         var svg = this.svg('get');
 
-        var dag = options.dag;
         var queue = Object.keys(dag);
         for (var v in dag) {
             for (var i=0, z=dag[v].length; i < z; i++) {
@@ -33,13 +53,11 @@
          */
 
         var nblocks = 11;
-        var canvas_height = this.height();
-        var block_size = canvas_height / nblocks;
-        var half_block = block_size / 2;
-        var x_center, y_center, radius=(block_size * 0.25);
         var x = 0;                      // start on the left
         var y = Math.ceil(nblocks / 2); // start in the middle
         var seen = {};
+
+        var tiler = Tiler(this, nblocks, svg);
 
         while (queue.length) {
             var v = queue.shift();
@@ -49,14 +67,7 @@
 
             x = v;
 
-            x_center = (x * block_size) + half_block;
-            y_center = (y * block_size) - half_block;
-
-            svg.circle( x_center
-                      , y_center
-                      , radius
-                      , {fill: 'yellow'}
-                       );
+            tiler.drawVertex(x, y);
 
             Array.prototype.push.apply(queue, dag[v]);
         }
