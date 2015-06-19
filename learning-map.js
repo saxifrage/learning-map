@@ -9,8 +9,6 @@
         return {
 
             drawVertex: function(x, y) {
-                console.log('drawing!');
-
                 x_center = (x * block_size) + half_block;
                 y_center = (y * block_size) - half_block;
 
@@ -55,9 +53,12 @@
         var nblocks = 11;
         var x = 0;                      // start on the left
         var y = Math.ceil(nblocks / 2); // start in the middle
-        var seen = {};
 
+        function column() { return new Array(nblocks) }
+
+        var map = [column()];
         var tiler = Tiler(this, nblocks, svg);
+        var seen = {};
 
         while (queue.length) {
             var v = queue.shift();
@@ -65,9 +66,12 @@
             if (seen[v]) return;
             seen[v] = true;
 
-            x = v;
-
             tiler.drawVertex(x, y);
+            map[x][y] = true;
+
+            if (x === map.length-1)
+                map.push(column());
+            x = x + 1;
 
             Array.prototype.push.apply(queue, dag[v]);
         }
