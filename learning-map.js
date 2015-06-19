@@ -10,13 +10,17 @@
 
         var dag = options.dag;
         var queue = [0];
+        var seen = {};
 
         while (queue.length) {
             var i = queue.shift();
+
+            if (seen[i]) return;
+            seen[i] = true;
+
             svg.circle(i*60, i*60, 50, {fill: 'none', stroke: 'yellow', strokeWidth: 3});
 
             Array.prototype.push.apply(queue, dag[i]);
-            console.log(queue);
         }
 
         return this;
