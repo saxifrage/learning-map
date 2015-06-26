@@ -3,7 +3,10 @@
     function Resource(relsize) {
         return {
             draw: function(svg) {
-                svg.circle(0, 0, 100, {fill: 'green'});
+                var x = Math.random() * 500;
+                var y = Math.random() * 500;
+                console.log(x, y, relsize)
+                svg.circle(x, y, relsize, {fill: 'green'});
             }
         }
     }
@@ -16,7 +19,8 @@
         this.svg();
         var svg = this.svg('get');
 
-        Resource(1).draw(svg);
+        for (var i=0, resource; resource = resources[i]; i++)
+            Resource(resource).draw(svg);
 
         return this;
     };
