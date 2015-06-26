@@ -4,15 +4,16 @@
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="jquery.svg.js"></script>
         <script src="http://code.interactjs.io/interact-1.2.4.min.js"></script>
-        <script src="learning-map.js"></script>
+        <script src="resource-map.js"></script>
         <script>
             $(document).ready(function() {
-                var dag = { '0': ['1']
-                          , '1': ['2', '3']
-                          , '2': []
-                          , '3': []
-                           }
-                $('#map').learningMap(dag);
+                var resources = { '0': 1
+                                , '1': 10
+                                , '2': 10
+                                , '3': 10
+                                , '4': 100
+                                 }
+                $('#map').resourceMap(resources);
             });
         </script>
         <style>
@@ -21,7 +22,7 @@
                 height: 100vh;
             }
         </style>
-        <link rel="stylesheet" href="learning-map.css">
+        <link rel="stylesheet" href="resource-map.css">
     </head>
     <body>
         <div id="map"></div>
