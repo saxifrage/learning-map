@@ -12,10 +12,21 @@
 
                 var previous = drawn[drawn.length - 1] || {x: 0, y: 0, w: 0, h: 0};
 
+                function random_side() {
+                    return Math.max(Math.random() * Math.sqrt(area_target), 50);
+                }
+
                 this.x = previous.x + previous.w;
                 this.y = previous.y;
-                this.w = Math.max((root * 2) * Math.random(), 50);
-                this.h = (area_target / this.w) - 10;
+                this.h = previous.h || random_side();
+                this.w = area_target / this.h;
+
+                if (this.x + this.w > W){
+                    this.x = 0;
+                    this.y = previous.y + previous.h;
+                    this.h = random_side();
+                    this.w = area_target / this.h;
+                }
 
                 console.log(relsize, demand, area, area_target, this.w, this.h);
 
