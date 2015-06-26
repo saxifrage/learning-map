@@ -10,16 +10,12 @@
 
                 this.x = previous.x + previous.w;
                 this.y = previous.y;
-                this.w = relsize * 10;
-                this.h = relsize * 10;
+                this.w = relsize * 50;
+                this.h = relsize * 50;
                 this.ell = Math.random() <= 0.2; // 20% of shapes should be ells
 
-                // Eventually we want white lines in between the pieces, but
-                // for now, let's vary the color.
-                // http://www.paulirish.com/2009/random-hex-color-code-snippets/
-                var color = '#'+Math.floor(Math.random()*16777215).toString(16);
-
-                svg.rect(this.x, this.y, this.w, this.h, 0, 0, {fill: color});
+                svg.rect(this.x, this.y, this.w, this.h, 0, 0,
+                         {fill: '#0099FF', stroke: 'white', strokeWidth: 10});
 
                 drawn.push(this);
             }
