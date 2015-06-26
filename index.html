@@ -7,7 +7,12 @@
         <script src="resource-map.js"></script>
         <script>
             $(document).ready(function() {
-                var resources = [1, 10, 10, 10, 100];
+                var resources = [ {'duration': 1}
+                                , {'duration': 3}
+                                , {'duration': 3}
+                                , {'duration': 3}
+                                , {'duration': 10}
+                                 ];
                 $('#map').resourceMap(resources);
             });
         </script>
